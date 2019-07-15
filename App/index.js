@@ -1,14 +1,13 @@
 import React, { Component, PropTypes, } from 'react';
+import { WebView } from 'react-native-webview';
 import {
     AppRegistry,
     StyleSheet,
     Text,
     View,
-    WebView,
     Image,
     Dimensions
 } from 'react-native';
-
 const win = Dimensions.get('window');
 class ChartWeb extends Component {
     constructor(props){
