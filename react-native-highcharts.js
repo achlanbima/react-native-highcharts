@@ -4,10 +4,10 @@ import {
     StyleSheet,
     Text,
     View,
-    WebView,
     Image,
     Dimensions
 } from 'react-native';
+import { WebView } from 'react-native-webview'
 
 const win = Dimensions.get('window');
 class ChartWeb extends Component {
@@ -31,19 +31,21 @@ class ChartWeb extends Component {
                     }
                     </style>
                     <head>
-                        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-                        ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
-                                      : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
                         ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
-                                      : ''}
                         ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
                                       : ''}
                         <script src="https://code.highcharts.com/modules/exporting.js"></script>
                         <script>
+                        var chart;
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
-                            Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
+                            chart = Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
+
+                            console.log(${this.props.stock})
+                            setTimeout(()=>{
+                                console.log(chart)
+                            },5000)
                         });
                         </script>
                     </head>
@@ -72,21 +74,24 @@ class ChartWeb extends Component {
             return (typeof value === 'function') ? value.toString() : value;
         });
 
-
+        
         config = JSON.parse(config)
         let concatHTML = `${this.state.init}${flattenObject(config)}${this.state.end}`;
         
         return (
           <View style={this.props.style}>
               <WebView
+              
                   onLayout={this.reRenderWebView}
                   style={styles.full}
+                  originWhitelist={['*']}
                   source={{ html: concatHTML, baseUrl: 'web/' }}
                   javaScriptEnabled={true}
                   domStorageEnabled={true}
                   scalesPageToFit={true}
                   scrollEnabled={false}
                   automaticallyAdjustContentInsets={true}
+                  ref={(ref)=>this.props.webviewRef(ref)}
                   {...this.props}
               />
           </View>
