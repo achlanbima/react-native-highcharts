@@ -20,10 +20,10 @@
     "WebView",
     "HighCharts"
   ],
-  "author": "Infinity0106",
+  "author": "deceive3w",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TradingPal/react-native-highcharts/issues"
+    "url": "https://github.com/deceive3w/react-native-highcharts/issues"
   },
-  "homepage": "https://github.com/TradingPal/react-native-highcharts#readme"
+  "homepage": "https://github.com/deceive3w/react-native-highcharts#readme"
 }
