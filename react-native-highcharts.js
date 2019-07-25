@@ -5,6 +5,7 @@ import {
     Text,
     View,
     Image,
+    Platform,
     Dimensions
 } from 'react-native';
 import { WebView } from 'react-native-webview'
@@ -31,21 +32,44 @@ class ChartWeb extends Component {
                     }
                     </style>
                     <head>
-                    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                    ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
+                    ${Platform.OS === 'ios' ? (
+                        `<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                        ${this.props.stock ? '<script src="https://code.highcharts.com/stock/highstock.js"></script>'
                                   : '<script src="https://code.highcharts.com/highcharts.js"></script>'}
-                    ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
-                                  : ''}
-                    ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
-                                  : ''}
+                        ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
+                                        : ''}
+                        ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
+                                        : ''}`
+                    ):(
+                        `<script src="file:///android_asset/jquery.js"></script>
+                        ${this.props.stock ? '<script src="file:///android_asset/highstock.js"></script>'
+                                  : '<script src="file:///android_asset/highcharts.js"></script>'}
+                        ${this.props.more ? '<script src="https://code.highcharts.com/highcharts-more.js"></script>'
+                            : ''}
+                        ${this.props.guage ? '<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>'
+                            : ''}`
+                    )}
+                    
+                    
+
 
                         <script>
                         var chart;
                         $(function () {
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
-                            chart = Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
+                            chart = new Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
-
+                            // var data = ${JSON.stringify(props.config.series[0].data)}
+                            // const chartData = [[new Date().getTime(),12312312,12321,123123,12312]]
+                            // console.log('raw data', data)
+                            // console.log('chart data', chartData)
+                            // data = data.concat(chartData)
+                            // chart.series[0].setData(data)
+                            // console.log('chart', chart)
+                            // setTimeout(()=>{
+                            //     chart.series[0].setData(data)
+                            // },1000)
+                            
                            
                         });
                         </script>
