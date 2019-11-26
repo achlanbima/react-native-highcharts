@@ -33,7 +33,7 @@ class ChartWeb extends Component {
                     </style>
                     <head>
                     ${Platform.OS === 'ios' ? (
-                        `<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+                        `<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
                         <script src="https://code.highcharts.com/stock/highstock.js"></script>
                         <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
                         <script src="https://code.highcharts.com/stock/indicators/indicators.js"></script>
@@ -107,18 +107,18 @@ class ChartWeb extends Component {
         return (
           <View style={this.props.style}>
               <WebView
-              
-                  onLayout={this.reRenderWebView}
-                  style={styles.full}
-                  originWhitelist={['*']}
-                  source={{ html: concatHTML, baseUrl: 'web/' }}
-                  javaScriptEnabled={true}
-                  domStorageEnabled={true}
-                  scalesPageToFit={true}
-                  scrollEnabled={false}
-                  automaticallyAdjustContentInsets={true}
-                  ref={(ref)=>this.props.webviewRef(ref)}
-                  {...this.props}
+                useWebKit={true}
+                onLayout={this.reRenderWebView}
+                style={styles.full}
+                originWhitelist={['*']}
+                source={{ html: concatHTML, baseUrl: '' }}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                scalesPageToFit={true}
+                scrollEnabled={false}
+                automaticallyAdjustContentInsets={true}
+                ref={(ref)=>this.props.webviewRef(ref)}
+                {...this.props}
               />
           </View>
         );
