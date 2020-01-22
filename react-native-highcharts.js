@@ -57,6 +57,7 @@ class ChartWeb extends Component {
                         <script>
                         var chart;
                         $(function () {
+                            let tooltipEnabled = null
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
                             chart = new Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
