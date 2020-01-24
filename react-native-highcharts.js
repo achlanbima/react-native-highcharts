@@ -56,8 +56,8 @@ class ChartWeb extends Component {
 
                         <script>
                         var chart;
+                        let tooltipEnabled = null
                         $(function () {
-                            let tooltipEnabled = null
                             Highcharts.setOptions(${JSON.stringify(this.props.options)});
                             chart = new Highcharts.${this.props.stock ? 'stockChart' : 'chart'}('container', `,
             end:`           );
@@ -74,6 +74,25 @@ class ChartWeb extends Component {
                             
                            
                         });
+                        document.addEventListener('click', function(){
+                            if(tooltipEnabled != null){
+                                clearTimeout(tooltipEnabled)
+                            }
+                            chart.update({
+                                tooltip:{
+                                    enabled: true
+                                }
+                            })
+
+                            tooltipEnabled = setTimeout(()=>{
+                                chart.update({
+                                    tootip:{
+                                        enabled: false
+                                    }
+                                })
+                                clearTimeout(tooltipEnabled)
+                            },7000)
+                        })
                         </script>
                     </head>
                     <body>
