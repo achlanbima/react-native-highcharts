@@ -86,7 +86,7 @@ class ChartWeb extends Component {
 
                             tooltipEnabled = setTimeout(()=>{
                                 chart.update({
-                                    tootip:{
+                                    tooltip:{
                                         enabled: false
                                     }
                                 })
